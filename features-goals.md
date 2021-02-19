@@ -25,4 +25,5 @@
 
 # Current Project
 ## Implement a login system
-Create all the nessessary things to log in. Including authentication, database connections, pages, error handling, etc..
+* Create all the nessessary things to log in. Including authentication, database connections, pages, error handling, etc..
+ - Create API route for checking if username or password already exist so the user can get immediate feedback

@@ -44,8 +44,10 @@ exports.postSignup = (req, res, next) => {
     rules.password(pass)
   ]);
 
-  // if all rules aren't true go to an error page (because client-side you should be able to submit an invalid form)
+  // if all rules aren't true go to an error page (because client-side you shouldn't be able to submit an invalid form)
   if (!isValid) {
     return next(422);
   }
+
+  res.send('hi');
 };
