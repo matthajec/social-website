@@ -1,0 +1,1 @@
+exports.flash = require('./flash')

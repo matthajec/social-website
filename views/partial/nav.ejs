@@ -1,0 +1,25 @@
+<div class="ui pointing menu">
+  <a href="/" class="item <% if (pageCategory === 'home') { %>active<% } %>">
+    Home
+  </a>
+  <a href="/friends" class="item <% if (pageCategory === 'friends') { %>active<% } %>">
+    Friends
+  </a>
+  <div class="right menu">
+    <div class="item">
+      <div class="ui transparent icon input">
+        <input type="text" placeholder="Search...">
+        <i class="search link icon"></i>
+      </div>
+    </div>
+    <div class="ui dropdown simple item">
+      Account
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item">Profile</a>
+        <a class="item">Settings</a>
+        <a class="item">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>

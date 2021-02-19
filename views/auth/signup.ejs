@@ -1,0 +1,55 @@
+<%- include('../partial/head.ejs') %>
+  <form class="ui form" action="/signup" method="POST">
+    <h1 class="first header">Sign Up</h1>
+
+    <div class="field">
+      <label>Desired Username</label>
+      <input type="text" name="uname" placeholder="Username">
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <input type="text" name="email" placeholder="Email">
+    </div>
+
+    <div class="field">
+      <label>Name</label>
+      <div class="two fields">
+        <div class="field">
+          <input type="text" name="fname" placeholder="First Name">
+        </div>
+        <div class="field">
+          <input type="text" name="lname" placeholder="Last Name">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input type="password" name="pass" placeholder="Password">
+    </div>
+
+    <div class="field">
+      <label>Verify Password</label>
+      <input type="password" name="verifyPass" placeholder="Verify Password">
+    </div>
+
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+    <button class="ui blue button" type="submit">Sign Up</button>
+  </form>
+  <script>
+  $('.ui.form')
+    .form({
+      on: 'blur',
+      inline: true,
+      fields: {
+        email: inputRuleSet.email,
+        uname: inputRuleSet.username,
+        fname: inputRuleSet.legalName,
+        lname: inputRuleSet.legalName,
+        pass : inputRuleSet.password
+      }
+    })
+  </script>
+<%- include('../partial/footer.ejs') %>

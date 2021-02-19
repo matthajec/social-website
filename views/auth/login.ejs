@@ -1,0 +1,14 @@
+<%- include('../partial/head.ejs') %>
+  <form class="ui form" action="/login" method="POST">
+    <div class="field">
+      <label>Email</label>
+      <input type="text" name="email" placeholder="Email">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Password">
+    </div>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button class="ui button" type="submit">Submit</button>
+  </form>
+<%- include('../partial/footer.ejs') %>
