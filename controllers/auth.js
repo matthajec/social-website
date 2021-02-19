@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 const { User } = require('../models');
+const { validation } = require('../util');
 
 // LOGIN
 // ===============================================================================
@@ -22,7 +23,10 @@ exports.getSignup = (req, res) => {
   });
 };
 
-exports.postSignup = (req, res) => {
+exports.postSignup = (req, res, next) => {
+  // destructure rules and checkMultipe out of validation
+  const { rules, checkMultiple } = validation;
+
   const {
     email,
     uname,
@@ -31,13 +35,17 @@ exports.postSignup = (req, res) => {
     pass
   } = req.body;
 
-  console.log(req.body);
+  // see if all rules are true
+  const isValid = checkMultiple([
+    rules.email(email),
+    rules.username(uname),
+    rules.legalName(fname),
+    rules.legalName(lname),
+    rules.password(pass)
+  ]);
 
-  User
-    .findOne({ $or: [{ email: email }, { uname: uname }] })
-    .then(userDoc => {
-      if (userDoc) {
-        console.log('user already existsted');
-      }
-    });
+  // if all rules aren't true go to an error page (because client-side you should be able to submit an invalid form)
+  if (!isValid) {
+    return next(422);
+  }
 };

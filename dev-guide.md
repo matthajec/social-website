@@ -27,12 +27,6 @@ A collection of the choices I made and functions and standards to be used throug
   * ```legalName``` - for "legal" names, like first name, last name, etc.
   * ```password``` - for passwords
 
-* ### Custom Color Prompt
-  A method ```customColorPrompt``` is added to ```$.fn.form.settings.templates```. This method allows you to create a label like those used for validations but you can pass in any color that exists in SemanticUI as a class. Used for things like the password strength-o-meter.
-
-  It takes 2 params, the first being ```msg```, which is the contents of the box, the second being ```color```, which will be the color of the box.
-
-
 
 ## Serverside Forms
 * ### CSRF
@@ -40,3 +34,5 @@ A collection of the choices I made and functions and standards to be used throug
 
   ```<input type="hidden" name="_csrf" value="<%= csrfToken %>">```
 
+* ### Input Validation
+  At ```/util``` there is an ```index.js``` which contains ```rules``` and a function ```checkMultiple```. ```rules``` is a list of functions that take a value as an input and output true or false according to the rules of the validator. ```CheckMultiple``` is a function that take an array of ```rules``` (or any expression that is ```true``` or ```false```) and returns true if all of the values are not false. If one or more values is false then the function will return false.

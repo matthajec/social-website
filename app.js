@@ -73,12 +73,22 @@ app.use(authRoutes);
 // ===============================================================================
 
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.render('error/500', {
-    docTitle: 'Something went wrong...',
-    pageCategory: null
-  });
+  if (err === 500) {
+    res.render('error/500', {
+      docTitle: 'Something went wrong...',
+      pageCategory: null
+    });
+  }
+
+  if (err === 422) {
+    res.render('error/422', {
+      docTitle: 'Something went wrong...',
+      pageCategory: null
+    });
+  }
 });
+
+
 
 
 

@@ -36,9 +36,8 @@ inputRuleSet.email = {
 // ===============================================================================
 
 // enforces a username format
-$.fn.form.settings.rules.usernameFormat = (value) => {
-  // regex prevents a preceding or trailing '.', prevents multiple '.' in a row, only allows for '_', 'a'-'Z', '0'-'9', and '.', and requires a character [a-z]
-  return validator.matches(value, /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]*[a-z]/ig);
+$.fn.form.settings.rules.usernameAlphanumeric = (value) => {
+  return validator.isAlphanumeric(value);
 };
 
 // sets a minimum length for the username at 3 characters
@@ -66,8 +65,8 @@ inputRuleSet.username = {
       prompt: 'Can\'t be longer than 30 characters'
     },
     {
-      type: 'usernameFormat',
-      prompt: 'Impropper format'
+      type: 'usernameAlphanumeric',
+      prompt: 'Can only contain letters'
     },
   ]
 };
@@ -107,12 +106,6 @@ $.fn.form.settings.rules.passwordMinLength = (value) => {
   return validator.isLength(value, { min: 8 });
 };
 
-$.fn.form.settings.rules.passwordStrong = (value) => {
-  return validator.isStrongPassword(value);
-};
-
-
-
 inputRuleSet.password = {
   rules: [
     {
@@ -122,6 +115,27 @@ inputRuleSet.password = {
     {
       type: 'passwordMinLength',
       prompt: 'Can\'t be shorter than 8 characters'
+    }
+  ]
+};
+
+// VERIFY PASSWORD RULES
+
+
+$.fn.form.settings.rules.verifyPasswordMatches = (value) => {
+  console.log($('.ui.form').form('get value', 'pass'));
+  return value === $('.ui.form').form('get value', 'pass');
+};
+
+inputRuleSet.verifyPassword = {
+  rules: [
+    {
+      type: 'empty',
+      prompt: 'Required'
+    },
+    {
+      type: 'verifyPasswordMatches',
+      prompt: 'Password do not match'
     }
   ]
 };
