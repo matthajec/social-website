@@ -18,7 +18,12 @@
       <div class="menu">
         <a class="item">Profile</a>
         <a class="item">Settings</a>
-        <a class="item">Logout</a>
+        <form action="/logout" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <a class="item">
+            <button>Logout</button>
+          </a>
+        </form>
       </div>
     </div>
   </div>

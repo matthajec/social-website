@@ -17,7 +17,7 @@
 * Use websockets to allow for real time text chat
 
 # Ideas for implementation
-* Use a storage bucket such as S3 or something with a CDN to serve photos
+* Use a storage bucket such as S3 or something to serve photos
 * Fetch the user from the DB alongside each request, use the auth level gained from this call to determine whether they have access
 * Use CSRF tokens in every form
 * Create "pluggable" validators for text feilds that can be reused

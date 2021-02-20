@@ -14,12 +14,19 @@ const authController = require('../controllers/auth');;
 
 router.get('/login', authController.getLogin);
 
+router.post('/login', authController.postLogin);
+
 // SIGN UP
 // ===============================================================================
 
 router.get('/signup', authController.getSignup);
 
 router.post('/signup', authController.postSignup);
+
+// LOGOUT
+// ===============================================================================
+
+router.post('/logout', authController.postLogout);
 
 // export the router
 module.exports = router;

@@ -10,6 +10,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const User = require('./models/user');
 
 // SET UP
 // ===============================================================================
@@ -46,9 +47,6 @@ app.use(
   })
 );
 
-// set up connect flash
-app.use(flash());
-
 // generates a new CSRF token on each request and passes it to every render;
 app.use(csrf());
 app.use((req, res, next) => {
@@ -56,36 +54,76 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post((req, res, next) => {
-  console.log('POST detected');
-  next();
+// set up connect flash
+app.use(flash());
+
+// get the user from db
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+
+  User
+    .findById(req.session.user._id)
+    .then(user => {
+      if (!user) {
+        // set user to undefined because their user object is malformed and they will keep getting errors otherwise
+        req.session.user = undefined;
+        throw new Error('failed to find user');
+      }
+
+      req.user = user;
+      next();
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.code = 500;
+      next(error);
+    });
 });
 
 // ROUTES
 // ===============================================================================
 const authRoutes = require('./routes/auth');
+const socialRoutes = require('./routes/social');
 
 // routes associated with authorized (log in/out, register, etc)
 app.use(authRoutes);
+
+// routes associated with viewing social content (users, posts, etc)
+app.use(socialRoutes);
 
 
 // ERROR HANDLING MIDDLEWARE
 // ===============================================================================
 
 app.use((err, req, res, next) => {
-  if (err === 500) {
-    res.render('error/500', {
+  console.log(err);
+
+  const code = err.code;
+
+  if (code === 401) {
+    return res.redirect('/login');
+  }
+
+  if (code === 403) {
+    return res.render('error/403', {
+      docTitle: 'Unauthorized',
+      pageCategory: null
+    });
+  }
+
+  if (code === 422) {
+    return res.render('error/422', {
       docTitle: 'Something went wrong...',
       pageCategory: null
     });
   }
 
-  if (err === 422) {
-    res.render('error/422', {
-      docTitle: 'Something went wrong...',
-      pageCategory: null
-    });
-  }
+  res.render('error/500', {
+    docTitle: 'Something went wrong...',
+    pageCategory: null
+  });
 });
 
 

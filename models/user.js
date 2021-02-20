@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
   pass: {
     type: String,
     required: true
+  },
+  authLevel: {
+    type: Number,
+    required: true
   }
 });
 

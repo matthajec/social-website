@@ -123,7 +123,6 @@ inputRuleSet.password = {
 
 
 $.fn.form.settings.rules.verifyPasswordMatches = (value) => {
-  console.log($('.ui.form').form('get value', 'pass'));
   return value === $('.ui.form').form('get value', 'pass');
 };
 
