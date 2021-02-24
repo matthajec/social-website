@@ -56,6 +56,5 @@ app.get('/route', checkAuth({ level: 5 }), getHandler)
 
 ### Levels
 There's gaps to allow for easy modification
-* 5 - A user without a verified email
-* 10 - Standard user with verified email
-* 50 - Access to everything
+* 10 - Standard user
+* 100 - Full access to all accounts and features (except other accounts with a 100 auth level)
